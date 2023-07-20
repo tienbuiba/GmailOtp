@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 import useResponsive from '../../hooks/useResponsive';
 // components
 import Logo from '../../components/Logo';
@@ -107,20 +107,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </AccountStyle>
         </Link>
       </Box>
-      <NavSection navConfig={navConfig} />
-      <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/static/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
-          <Button component={RouterLink} to="/dashboard/deposit" variant="contained">
-            {t("dashboard_003")}
-          </Button>
-        </Stack>
-      </Box>
+      <NavSection navConfig={navConfig} /> 
     </Scrollbar>
   );
 

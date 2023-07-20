@@ -47,9 +47,9 @@ const RentMailMain = () => {
   const [rent, setRent] = useState(false);
   const [clickRent, setClickRent] = useState(false);
 
-  useEffect(() => {
-    dispatch(showNoticeModal())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(showNoticeModal())
+  // }, [])
 
   useEffect(() => {
     dispatch(openLoadingApi());

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import TokenService from 'src/services/TokenService';
 import {fCurrency} from 'src/utils/formatNumber';
 import Page from '../Page';
+import Label from '../Label';
 
 export const ProfileDetails = (props) => {
   const profile = JSON.parse(TokenService.getLocalProfile('profile'));
@@ -128,10 +129,11 @@ export const ProfileDetails = (props) => {
                   item
                   md={6}
                   xs={6}
+                  sx={{ textTransform: 'capitalize'}}
                 >
-                  <Button variant="contained" color={(profile.status === 'ACTIVE' && 'success') || 'error'} sx={{ cursor: 'default', color: '#fff' }}>
-                    {(profile.status)}
-                  </Button>
+                  <Label color='success' variant='filled'>
+                  {(profile.status === 'ACTIVE')&& ('Đang hoạt động')} 
+                  </Label>              
                 </Grid>
               </Grid>
             </Grid>

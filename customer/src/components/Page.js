@@ -9,7 +9,7 @@ import { Box } from '@mui/material';
 const Page = forwardRef(({ children, title = '', meta, ...other }, ref) => (
   <>
     <Helmet>
-      <title>{`${title} | Gmailmmo`}</title>
+      <title>{`${title} | Gmailotp`}</title>
       {meta}
     </Helmet>
     <Box ref={ref} {...other}>

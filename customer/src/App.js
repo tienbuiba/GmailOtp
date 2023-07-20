@@ -1,20 +1,18 @@
 import Router from './routes';
-import ThemeProvider from './theme';
-import ScrollToTop from './components/ScrollToTop';
-import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import Loading from './components/loading/Loading';
 import RentMailModal from './modal/RentMailModal';
 import NoticeModal from './modal/NoticeModal';
+import { createTheme } from './utils/theme';
+import { ThemeProvider } from '@emotion/react';
 
 
 // ----------------------------------------------------------------------
 
+const theme = createTheme();
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <ScrollToTop/>
-      <BaseOptionChartStyle/>
+    <ThemeProvider theme={theme}>
       <Loading/>
       <Router/>
       <NoticeModal/>

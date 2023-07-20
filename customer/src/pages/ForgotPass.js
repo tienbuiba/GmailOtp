@@ -19,9 +19,27 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { closeLoadingApi, openLoadingApi } from 'src/redux/creates-action/LoadingAction';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from '@emotion/styled';
+import Logo from 'src/components/Logo';
 
 // ============================|| FORGOT PASSWORD ||============================ //
 
+
+const HeaderStyle = styled('header')(({ theme }) => ({
+  top: 0,
+  zIndex: 9,
+  lineHeight: 0,
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  position: 'absolute',
+  padding: theme.spacing(3),
+  justifyContent: 'space-between',
+  [theme.breakpoints.up('md')]: {
+    alignItems: 'flex-start',
+    padding: theme.spacing(7, 5, 0, 7),
+  },
+}));
 const ForgotPass = () => {
   const [sended, setSended] = useState(false);
   const options = {
@@ -32,15 +50,18 @@ const ForgotPass = () => {
   console.log("adadad")
   const dispatch = useDispatch();
   const data = useSelector(state => state.loading.data);
-  
+
   return (
     <div>
+      <HeaderStyle>
+        <Logo />
+      </HeaderStyle>
       {sended === true ? (
         <>
           <Container maxWidth="sm" sx={{ mt: 20 }}>
             <Card>
               <Grid container spacing={3}>
-                <Grid item xs={12} sx={{ textAlign: 'center', mt:2 }}>
+                <Grid item xs={12} sx={{ textAlign: 'center', mt: 2 }}>
                   <CheckCircleIcon color="success" sx={{ textAlign: 'center', width: 90, height: 65, }} />
                 </Grid>
                 <Grid item xs={12} >
@@ -66,108 +87,108 @@ const ForgotPass = () => {
           </Container>
         </>
       ) : (<>
-        <Grid container >
-          <Grid item xs={12}  md={4}></Grid>
-          <Grid container item xs={12}  md={4} sx={{ textAlign: 'center' }}>
-            <Grid item xs={12}>
-              <Typography variant="h3" sx={{ mb: 4, marginLeft: 2, marginTop: 20, }}>
-                {t("forgot_05")}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Formik
-                initialValues={{
-                  email: '',
-                  submit: null
-                }}
-                validationSchema={Yup.object().shape({
-                  email: Yup.string()
-                    .required("This field is required")
-                    .email('Please provide a valid password'),
-                })}
-                onSubmit={(values) => {
-                  dispatch(openLoadingApi());
-                  apiUserForgotPass(values.email,).then(result => {
-                    dispatch(closeLoadingApi());
-                    let res = result.data;
-                    toast.success(res.message, options);
-                    setTimeout(() => {
-                      setSended(true)
-                    }, 500)
-                  })
-                    .catch(err => {
+        <Container maxWidth={'sm'}>
+          <Card sx={{ mt: 20, px: 3, py: 3 }}>
+            <Grid container item xs={12} sx={{ textAlign: 'center' }}>
+              <Grid item xs={12}>
+                <Typography variant="h3" sx={{ mb: 4, marginLeft: 2 }}>
+                  {t("forgot_05")}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Formik
+                  initialValues={{
+                    email: '',
+                    submit: null
+                  }}
+                  validationSchema={Yup.object().shape({
+                    email: Yup.string()
+                      .required("This field is required")
+                      .email('Please provide a valid password'),
+                  })}
+                  onSubmit={(values) => {
+                    dispatch(openLoadingApi());
+                    apiUserForgotPass(values.email,).then(result => {
                       dispatch(closeLoadingApi());
-                      if (err.response.data.statusCode === 401) {
-                        toast.error(err.response.data.message, options);
-                        dispatch(closeLoadingApi());
-                      } else if (err.response.data.statusCode === 400) {
-                        toast.error(err.response.data.message, options);
-                        dispatch(closeLoadingApi());
-                      } else {
-                        toast.error(err.response.data.message, options);
-                        dispatch(closeLoadingApi());
-                      }
+                      let res = result.data;
+                      toast.success(res.message, options);
+                      setTimeout(() => {
+                        setSended(true)
+                      }, 500)
                     })
-                }}
-              >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-                  <form noValidate onSubmit={handleSubmit}>
-                    <Grid container spacing={3.5} sx={{ paddingLeft: 2 }}>
-                      <Grid item xs={3} >
-                        <Typography sx={{ mb: 2 }}>Email</Typography>
-                      </Grid>
-                      <Grid item xs={9}>
-                        <Stack spacing={0.7}>
-                          <Grid item xs={9}>
-                            <OutlinedInput
-                              fullWidth
-                              size='small'
-                              autoComplete="current-password"
-                              error={Boolean(touched.email && errors.email)}
-                              id="email"
-                              type={'email'}
-                              value={values.email}
-                              name="email"
-                              onBlur={handleBlur}
-                              placeholder="sale@gmailmmo.com"
-                              onChange={(e) => {
-                                handleChange(e)
-                              }}
-                            />
+                      .catch(err => {
+                        dispatch(closeLoadingApi());
+                        if (err.response.data.statusCode === 401) {
+                          toast.error(err.response.data.message, options);
+                          dispatch(closeLoadingApi());
+                        } else if (err.response.data.statusCode === 400) {
+                          toast.error(err.response.data.message, options);
+                          dispatch(closeLoadingApi());
+                        } else {
+                          toast.error(err.response.data.message, options);
+                          dispatch(closeLoadingApi());
+                        }
+                      })
+                  }}
+                >
+                  {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                    <form noValidate onSubmit={handleSubmit}>
+                      <Grid container spacing={3.5} sx={{ paddingLeft: 2 }}>
+                        <Grid item xs={3} >
+                          <Typography sx={{ mb: 2 }}>Email</Typography>
+                        </Grid>
+                        <Grid item xs={9}>
+                          <Stack spacing={0.7}>
+                            <Grid item xs={9}>
+                              <OutlinedInput
+                                fullWidth
+                                size='small'
+                                autoComplete="current-password"
+                                error={Boolean(touched.email && errors.email)}
+                                id="email"
+                                type={'email'}
+                                value={values.email}
+                                name="email"
+                                onBlur={handleBlur}
+                                placeholder="sale@gmailmmo.com"
+                                onChange={(e) => {
+                                  handleChange(e)
+                                }}
+                              />
+                            </Grid>
+                            {touched.email && errors.email && (
+                              <FormHelperText error id="helper-text-password-signup">
+                                {errors.email}
+                              </FormHelperText>
+                            )}
+                          </Stack>
+                        </Grid>
+                        {errors.submit && (
+                          <Grid item xs={12}>
+                            <FormHelperText error>{errors.submit}</FormHelperText>
                           </Grid>
-                          {touched.email && errors.email && (
-                            <FormHelperText error id="helper-text-password-signup">
-                              {errors.email}
-                            </FormHelperText>
-                          )}
-                        </Stack>
-                      </Grid>
-                      {errors.submit && (
-                        <Grid item xs={12}>
-                          <FormHelperText error>{errors.submit}</FormHelperText>
-                        </Grid>
-                      )}
-                      <Grid item xs={12} sx={{textAlign: 'center', mb: 3}}>
-                        <Grid item >
-                          <Button
-                            disableElevation
-                            type="submit"
-                            variant="contained"
-                            endIcon={<SendIcon />}
-                            disabled={data.isLoading === true ? true : false}
-                          >
-                            {t("forgot_06")}
-                          </Button>
+                        )}
+                        <Grid item xs={12} sx={{ textAlign: 'center', mb: 3 }}>
+                          <Grid item >
+                            <Button
+                              disableElevation
+                              type="submit"
+                              variant="contained"
+                              endIcon={<SendIcon />}
+                              disabled={data.isLoading === true ? true : false}
+                            >
+                              {t("forgot_06")}
+                            </Button>
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  </form>
-                )}
-              </Formik>
+                    </form>
+                  )}
+                </Formik>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={4}></Grid>
-        </Grid>
+          </Card>
+        </Container>
       </>)}
       <ToastContainer />
     </div>
